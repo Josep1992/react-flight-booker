@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { ReactComponent as Svg } from './assets/airport.svg'
 import axios from 'axios'
-import { Container } from 'semantic-ui-react'
 import Header from './components/layout/Header'
 import Flights from './components/flights/Flights'
 import Booking from './components/flights/Booking'
@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Container>
+        <div className="container">
           <Switch>
             <Route
               exact
@@ -39,7 +39,8 @@ class App extends Component {
             />
             <Route path="/book" component={Booking} />
           </Switch>
-        </Container>
+          {/* <Svg className="background" /> */}
+        </div>
       </Router>
     )
   }

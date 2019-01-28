@@ -2,24 +2,20 @@ import React from 'react'
 import Moment from 'react-moment'
 import { Link } from 'react-router-dom'
 
-import { Table, Button } from 'semantic-ui-react'
-
 const Flight = ({ info }) => (
-  <Table.Row verticalAlign="top">
-    <Table.Cell>{`$ ${info.cost}`}</Table.Cell>
-    <Table.Cell>
+  <tr>
+    <td>{`$ ${info.cost}`}</td>
+    <td>
       <span>{info.departs.airport} ✈</span> <Moment format="LT">{info.departs.when}</Moment>
-    </Table.Cell>
-    <Table.Cell>{getHourDifference(info.departs.when, info.arrives.when)}</Table.Cell>
-    <Table.Cell>
+    </td>
+    <td>{getHourDifference(info.departs.when, info.arrives.when)}</td>
+    <td>
       <span>{info.arrives.airport} ✈</span> <Moment format="LT">{info.arrives.when}</Moment>
-    </Table.Cell>
-    <Table.Cell>{info.airline}</Table.Cell>
-    <Table.Cell>{info.number}</Table.Cell>
-    <Button primary>
-      <Link to="/book">Book</Link>
-    </Button>
-  </Table.Row>
+    </td>
+    <td>{info.airline}</td>
+    <td>{info.number}</td>
+    <Link to={{ pathname: '/book', state: { ...info } }}>Book</Link>
+  </tr>
 )
 
 function getHourDifference(date1, date2) {
