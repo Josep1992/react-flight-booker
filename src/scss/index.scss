@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Karla|Rubik:700');
+@import url('https://fonts.googleapis.com/css?family=Karla|Rubik');
 @import './App.scss';
 @import '../../node_modules/bulma/bulma.sass';
 
@@ -9,13 +9,13 @@
 }
 
 html {
-  background-color: #91afcb;
+  background-color: $background;
 }
 
 body {
   margin: 0;
   padding: 10px;
-  background-color: #91afcb;
+  background-color: $background;
   color: #333;
   font-style: $body-font;
   z-index: 1;
@@ -28,6 +28,7 @@ h4,
 h5,
 h6 {
   font-family: $header-font;
+  font-weight: 500;
 }
 
 p {
@@ -46,4 +47,12 @@ a {
     text-decoration: none;
     color: #333;
   }
+}
+
+table {
+  margin: 60px auto;
+}
+
+form {
+  margin-top: 5px;
 }

@@ -9,7 +9,6 @@ class App extends Component {
   state = {
     flights: [],
     error: '',
-    booked: false,
   }
 
   componentDidMount = async () => {

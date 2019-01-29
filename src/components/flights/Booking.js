@@ -70,7 +70,8 @@ class Booking extends Component {
     const { number, arrives, departs, cost, airline } = this.state.details
 
     return (
-      <>
+      <div className="columns">
+        <div className="column is-half is-offset-one-quarter">
         <div className="box">
           <div className="content">
             <h2>Flight #{number}</h2>
@@ -102,18 +103,23 @@ class Booking extends Component {
           </div>
         </div>
         {success === true && (
-          <div className="notification is-success">
-            <p>You have successfully booked this flight.</p>
-            <p>Confirmation Code: {confirmation}</p>
-            <p>Passenger: {`${first_name} ${last_name}`}</p>
-            {bags !== 0 && <p>Bags: {bags}</p>}
-          </div>
+          <>
+            <div className="notification is-success">
+              <p>You have successfully booked this flight.</p>
+              <p>Confirmation Code: {confirmation}</p>
+              <p>Passenger: {`${first_name} ${last_name}`}</p>
+              {bags !== 0 && <p>Bags: {bags}</p>}
+            </div>
+            <br />
+            <Link to="/" className="button is-link is-small">
+              Back to flights
+            </Link>
+          </>
         )}
         {success === false && (
           <>
             <h3 className="tag is-danger">{message}</h3>
-            <br />
-            <Link to="/" className="button">
+            <Link to="/" className="button is-link is-small">
               Book another Flight.
             </Link>
           </>
@@ -157,6 +163,9 @@ class Booking extends Component {
                   <option>3</option>
                   <option>4</option>
                   <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
                 </select>
               </div>
             </div>
@@ -172,8 +181,8 @@ class Booking extends Component {
             </div>
           </div>
         </form>
-        <br />
-      </>
+        <br /></div>
+      </div>
     )
   }
 }
