@@ -14,7 +14,11 @@ const Flight = ({ info }) => (
     </td>
     <td>{info.airline}</td>
     <td>{info.number}</td>
-    <Link to={{ pathname: '/book', state: { ...info } }}>Book</Link>
+    <td>
+      <Link to={{ pathname: '/book', state: { ...info } }} className="button is-primary is-small">
+        Book
+      </Link>
+    </td>
   </tr>
 )
 

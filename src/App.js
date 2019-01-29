@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { ReactComponent as Svg } from './assets/airport.svg'
 import axios from 'axios'
 import Header from './components/layout/Header'
 import Flights from './components/flights/Flights'
@@ -10,6 +9,7 @@ class App extends Component {
   state = {
     flights: [],
     error: '',
+    booked: false,
   }
 
   componentDidMount = async () => {
@@ -39,7 +39,6 @@ class App extends Component {
             />
             <Route path="/book" component={Booking} />
           </Switch>
-          {/* <Svg className="background" /> */}
         </div>
       </Router>
     )

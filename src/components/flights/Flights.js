@@ -23,6 +23,9 @@ const Flights = ({ flights }) => (
         <th>
           <abbr title="Number">Number</abbr>
         </th>
+        <th>
+          <abbr title="Booking">Booking</abbr>
+        </th>
       </tr>
     </thead>
     <tbody>{flights.length !== 0 && flights.map((flight) => <Flight key={flight.number} info={flight} />)}</tbody>
