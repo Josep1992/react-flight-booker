@@ -12,30 +12,32 @@ class Booking extends Component {
     flight_number: 'A174E',
     bags: 2,
     details: {},
-    success: false,
+    success: null,
     message: '',
   }
 
-  componentDidMount = () => {
-    this.setState({ details: this.props.history.location.state })
-  }
+  componentDidMount = () => this.setState({ details: this.props.history.location.state })
 
   bookFlight = (e) => {
     const { first_name, last_name } = this.state
     e.preventDefault()
     if (first_name.length !== 0 && last_name.length !== 0) {
       axios.post('/book', { first_name, last_name }).then((res) => {
-        console.log(res)
-        this.clearInputs()
+        console.log(res.data)
+        if (res.data.success !== false) {
+          this.setState({ success: res.data.success, confirmation: res.data.confirmation })
+        } else {
+          this.setState({ success: res.data.success, message: res.data.message })
+        }
       })
     } else {
-      this.setState({ fnError: true, lnError: true }, () => setTimeout(() => this.setState({ fnError: false, lnError: false }), 3000))
+      this.setState({ fnError: true, lnError: true }, () => setTimeout(() => this.setState({ fnError: false, lnError: false }), 2500))
     }
   }
 
   handleInputs = (e) => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trim(),
     })
   }
 
@@ -48,14 +50,15 @@ class Booking extends Component {
       lnError: false,
       flight_number: 'A174E',
       bags: 2,
-      success: false,
+      success: null,
       message: '',
+      confirmation: '',
     })
     form.reset()
   }
 
   render() {
-    const { flight_number, fnError, lnError, message } = this.state
+    const { flight_number, fnError, lnError, message, success, confirmation } = this.state
     const { number, arrives, departs, cost, airline } = this.state.details
 
     return (
@@ -90,10 +93,16 @@ class Booking extends Component {
             <p>${cost}</p>
           </div>
         </div>
-        <Link to="/" className="button">
-          Back to Flights
-        </Link>
-        <div className="flight-details" />
+        {success !== false && (
+          <div className="notification is-success">
+            <p>You have successfully booked this flight, Here is your confirmation code: {confirmation}</p>
+          </div>
+        )}
+        {success === false && (
+          <div className="notification is-danger">
+            <p>{message}</p>
+          </div>
+        )}
         <br />
         <form onSubmit={this.bookFlight}>
           <div className="field">
@@ -136,7 +145,6 @@ class Booking extends Component {
               <button className="button is-link" type="submit">
                 Book
               </button>
-
               <Link to="/" className="button is-danger">
                 Cancel
               </Link>
