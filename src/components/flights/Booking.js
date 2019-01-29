@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Moment from 'react-moment'
 import { Link } from 'react-router-dom'
 
 class Booking extends Component {
   state = {
     first_name: '',
+    fnError: false,
     last_name: '',
+    lnError: false,
     flight_number: 'A174E',
     bags: 2,
     details: {},
@@ -14,7 +17,6 @@ class Booking extends Component {
   }
 
   componentDidMount = () => {
-    console.log(this.props.history.location.state)
     this.setState({ details: this.props.history.location.state })
   }
 
@@ -27,10 +29,7 @@ class Booking extends Component {
         this.clearInputs()
       })
     } else {
-      this.setState({
-        fnError: setTimeout(()=> this.setState(fnError:)),
-        lnError: true,
-      })
+      this.setState({ fnError: true, lnError: true }, () => setTimeout(() => this.setState({ fnError: false, lnError: false }), 3000))
     }
   }
 
@@ -56,10 +55,41 @@ class Booking extends Component {
   }
 
   render() {
-    const { details, first_name, last_name, flight_number, fnError, lnError } = this.state
+    const { flight_number, fnError, lnError, message } = this.state
+    const { number, arrives, departs, cost, airline } = this.state.details
+
     return (
       <>
-        <h1>Booking Flight #{details.number}</h1>
+        <div className="box">
+          <div className="content">
+            <h1>Flight #{number}</h1>
+            <h5>Booking Details</h5>
+            <p>{airline}</p>
+            {arrives && departs && (
+              <p>
+                <span>{(arrives || {}).airport}</span> ➡ <span>{(departs || {}).airport}</span>
+              </p>
+            )}
+            {departs && (
+              <p>
+                Departs ✈ <br />
+                <span>
+                  <Moment format="MMMM Do YYYY, h:mm:ss a">{(departs || {}).when}</Moment>
+                </span>
+              </p>
+            )}
+            {arrives && (
+              <p>
+                Arrives ✈ <br />
+                <span>
+                  <Moment format="MMMM Do YYYY, h:mm:ss a">{(arrives || {}).when}</Moment>
+                </span>
+              </p>
+            )}
+            <h5>Total price</h5>
+            <p>${cost}</p>
+          </div>
+        </div>
         <Link to="/" className="button">
           Back to Flights
         </Link>
@@ -106,6 +136,10 @@ class Booking extends Component {
               <button className="button is-link" type="submit">
                 Book
               </button>
+
+              <Link to="/" className="button is-danger">
+                Cancel
+              </Link>
             </div>
           </div>
         </form>
