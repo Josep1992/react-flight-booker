@@ -25,17 +25,15 @@ class Booking extends Component {
       axios
         .post('/book', { first_name, last_name })
         .then((res) => {
-          console.log(res.data)
           switch (res.data.success) {
             case true:
               this.setState({ success: res.data.success, confirmation: res.data.confirmation, submitted: true })
               break
             case false:
-              this.setState({ success: false, message: res.data.message, submitted: true }, () =>
-                setTimeout(this.setState({ success: null, message: '' }), 2000)
-              )
+              this.setState({ success: false, message: res.data.message, submitted: true })
               break
             default:
+              this.clearInputs()
               break
           }
         })
@@ -111,7 +109,15 @@ class Booking extends Component {
             {bags !== 0 && <p>Bags: {bags}</p>}
           </div>
         )}
-        {success === false && <p className="tag is-danger">{message}</p>}
+        {success === false && (
+          <>
+            <h3 className="tag is-danger">{message}</h3>
+            <br />
+            <Link to="/" className="button">
+              Book another Flight.
+            </Link>
+          </>
+        )}
         <br />
         <form onSubmit={this.bookFlight}>
           <div className="field">
